@@ -1,27 +1,28 @@
 const express = require("express");
 const { ObjectId } = require("mongodb");
 const axios = require("axios");
-const auth = require("../middleware/auth.js");
+const auth = require("../middlewares/auth.js");
 const transactions = require("../database/database.js")("transactions").collection("transactions");
+const { microservices } = require("../env.js");
 
 const app = express();
 
 app.use(express.json());
 
 app.listen(9004, "127.0.0.1", () => {
-	console.log("transaction microservice on port 9003");
+	console.log("transaction microservice on port 9004");
 });
 
-app.get("/transactions", auth, async (req, res) => {
-	res.status(200).send(
+app.get("/", auth, async (req, res) => {
+	res.send(
 		await transactions.find({ user : new ObjectId(req._user.id) }).toArray()
 	);
 });
 
-app.post("/transactions", auth, async (req, res) => {
+app.post("/", auth, async (req, res) => {
 	// Appel synchrone point à poin
-	const { data : book } = await axios.get(`http://localhost:9001/books/${req.body.book}`);
-	req._user.points = (await axios.get(`http://localhost:9000/users/${req._user.id}`)).data.points;
+	const { data : book } = await axios.get(`${microservices.user}/${req.body.book}`);
+	req._user.points = (await axios.get(`${microservices.user}/${req._user.id}`)).data.points;
 
 
 	let fee = book.price;
@@ -36,7 +37,7 @@ app.post("/transactions", auth, async (req, res) => {
 	});
 
 	// Appel asynchrone point à point
-	axios.put(`http://localhost:9000/users/${req._user.id}/points`);
+	axios.put(`${microservices.user}/${req._user.id}/points`);
 
-	res.status(200).send({ points : req._user.points });
+	res.send({ points : req._user.points });
 })

@@ -11,9 +11,9 @@ app.listen(9002, "127.0.0.1", () => {
 });
 
 
-app.get("/books", async (req, res) => {
-	res.status(200).send(await books.find().toArray());
+app.get("/", async (req, res) => {
+	res.send(await books.find().toArray());
 });
-app.get("/books/:id", async (req, res) => {
-	res.status(200).send(await books.findOne({ _id: new ObjectId(req.params.id) }));
+app.get("/:id", async (req, res) => {
+	res.send(await books.findOne({ _id: new ObjectId(req.params.id) }));
 });

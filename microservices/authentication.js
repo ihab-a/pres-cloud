@@ -13,18 +13,16 @@ app.listen(9003, "127.0.0.1", () => {
 	console.log("authentication microservice on port 9002");
 });
 
-app.post("/auth/login", async (req, res) => {
+app.post("/login", async (req, res) => {
 	const { email, password } = req.body;
-
-	console.log(req.body)
 
 	const user = await users.findOne({ email });
 
 	if(!user)
-		return res.status(404).send({ error : "Email does not exist" });
+		return res.send({ error : "Email does not exist" });
 
 	if(! await bcrypt.compare(password, user.password))
-		return res.status(403).send({ error : "Incorrect password" });
+		return res.send({ error : "Incorrect password" });
 
 	const token = jwt.sign(
 		{ id : user._id },
@@ -32,7 +30,7 @@ app.post("/auth/login", async (req, res) => {
 		{ expiresIn : "30d" },
 	);
 
-	return res.status(200).send({
+	return res.send({
 		id: user._id,
 		token,
 	});

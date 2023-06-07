@@ -11,13 +11,13 @@ app.listen(9001, "127.0.0.1", () => {
 });
 
 
-app.get("/users", async (req, res) => {
-	res.status(200).send(await users.find().toArray());
+app.get("/", async (req, res) => {
+	res.send(await users.find().toArray());
 });
-app.get("/users/:id", async (req, res) => {
-	res.status(200).send(await users.findOne({ _id: new ObjectId(req.params.id) }));
+app.get("/:id", async (req, res) => {
+	res.send(await users.findOne({ _id: new ObjectId(req.params.id) }));
 });
-app.put("/users/:id/points", async (req, res) => {
+app.put("/:id/points", async (req, res) => {
 	const update = await users.updateOne({ _id: new ObjectId(req.params.id) }, {$inc : {points : 1}});
-	res.status(200).send(null);
+	res.send(null);
 });
