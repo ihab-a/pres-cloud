@@ -1,14 +1,14 @@
 const express = require("express");
 const { ObjectId } = require("mongodb");
 const axios = require("axios");
-const auth = require("./auth.js");
-const transactions = require("./database.js")("transactions").collection("transactions");
+const auth = require("../middleware/auth.js");
+const transactions = require("../database/database.js")("transactions").collection("transactions");
 
 const app = express();
 
 app.use(express.json());
 
-app.listen(9003, () => {
+app.listen(9004, "127.0.0.1", () => {
 	console.log("transaction microservice on port 9003");
 });
 

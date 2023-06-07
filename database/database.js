@@ -1,5 +1,5 @@
 const { MongoClient } = require("mongodb");
-const uri = require("./env.js");
+const uri = require("../env.js");
 
 module.exports = (database="users") => {
 	const client = new MongoClient(uri);

@@ -1,12 +1,12 @@
 const express = require("express");
 const { ObjectId } = require("mongodb");
-const users = require("./database.js")("users").collection("users");
+const users = require("../database/database.js")("users").collection("users");
 
 const app = express();
 
 app.use(express.json());
 
-app.listen(9000, () => {
+app.listen(9001, "127.0.0.1", () => {
 	console.log("users microservice on port 9000");
 });
 

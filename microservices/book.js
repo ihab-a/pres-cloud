@@ -1,12 +1,12 @@
 const express = require("express");
 const { ObjectId } = require("mongodb");
-const books = require("./database.js")("books").collection("books");
+const books = require("../database/database.js")("books").collection("books");
 
 const app = express();
 
 app.use(express.json());
 
-app.listen(9001, () => {
+app.listen(9002, "127.0.0.1", () => {
 	console.log("books microservice on port 9001");
 });
 
