@@ -2,6 +2,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const users = require("../database/database.js")("users").collection("users");
+const { microservices } = require("../env.js");
 
 const { ENV_SECRET } = process.env;
 
@@ -10,7 +11,7 @@ const app = express();
 app.use(express.json());
 
 app.listen(9003, "127.0.0.1", () => {
-	console.log("authentication microservice on port 9002");
+	console.log(`authentication microservice running on [${microservices.authentication}]`);
 });
 
 app.post("/login", async (req, res) => {

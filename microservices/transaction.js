@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 
 app.listen(9004, "127.0.0.1", () => {
-	console.log("transaction microservice on port 9004");
+	console.log(`transaction microservice running on [${microservices.transaction}]`);
 });
 
 app.get("/", auth, async (req, res) => {
