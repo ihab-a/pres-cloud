@@ -21,7 +21,7 @@ app.get("/", auth, async (req, res) => {
 
 app.post("/", auth, async (req, res) => {
 	// Appel synchrone point à poin
-	const { data : book } = await axios.get(`${microservices.user}/${req.body.book}`);
+	const { data : book } = await axios.get(`${microservices.book}/${req.body.book}`);
 	req._user.points = (await axios.get(`${microservices.user}/${req._user.id}`)).data.points;
 
 
