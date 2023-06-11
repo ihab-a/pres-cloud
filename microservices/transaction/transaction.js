@@ -1,9 +1,10 @@
 const express = require("express");
 const { ObjectId } = require("mongodb");
 const axios = require("axios");
-const auth = require("../middlewares/auth.js");
-const transactions = require("../database/database.js")("transactions").collection("transactions");
-const { microservices } = require("../env.js");
+const auth = require("../../middlewares/auth.js");
+const notifyTransaction = require("./notifyTransaction.js");
+const transactions = require("../../database/database.js")("transactions").collection("transactions");
+const { microservices } = require("../../env.js");
 
 const app = express();
 
@@ -32,12 +33,12 @@ app.post("/", auth, async (req, res) => {
 
 	transactions.insertOne({
 		user: new ObjectId(req._user.id),
-		book: book.id,
+		book: book._id,
 		fee,
 	});
 
-	// Appel asynchrone point à point
-	axios.put(`${microservices.user}/${req._user.id}/points`);
+	// send transation event (msg)
+	notifyTransaction(req._user.id, book._id);
 
-	res.send({ points : req._user.points });
+	res.send(null);
 })

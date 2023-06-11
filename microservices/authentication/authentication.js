@@ -1,8 +1,8 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const users = require("../database/database.js")("users").collection("users");
-const { microservices } = require("../env.js");
+const users = require("../../database/database.js")("users").collection("users");
+const { microservices } = require("../../env.js");
 
 const { ENV_SECRET } = process.env;
 

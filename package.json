@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"nodemon -q microservices/user.js\" \"nodemon -q microservices/book.js\" \"nodemon -q microservices/authentication.js\" \"nodemon -q microservices/transaction.js\" \"nodemon -q gateway.js\"",
+    "start": "concurrently \"nodemon -q microservices/user/user.js\" \"nodemon -q microservices/book/book.js\" \"nodemon -q microservices/authentication/authentication.js\" \"nodemon -q microservices/transaction/transaction.js\" \"nodemon -q gateway.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
