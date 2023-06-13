@@ -16,7 +16,10 @@ module.exports = async () => {
 	channel.consume(queue, async (msg) => {
 		data = JSON.parse(msg.content.toString());
 
-		const update = await users.updateOne({ _id: new ObjectId(data.user) }, {$inc : {points : 1}});
+		const update = await users.updateOne(
+			{ _id: new ObjectId(data.user) }, 
+			{$inc : {points : 1}}
+		);
 
 		channel.ack(msg);
 	});

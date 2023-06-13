@@ -4,7 +4,7 @@ async function consumer(){
   const connection = await amqp.connect("amqp://127.0.0.1:5672");
   const channel = await connection.createChannel();
 
-  const { queue } = await channel.assertQueue("q1");
+  const { queue } = await channel.assertQueue("q2");
 
   const exchange = await channel.assertExchange("exchange_test", "fanout");
 

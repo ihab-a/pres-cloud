@@ -1,17 +1,17 @@
 const amqp = require("amqplib");
 
-async function connect() {
-  const server = await amqp.connect("amqp://127.0.0.1:5672");
-  const channel = await server.createChannel();
+async function producer(){
+  const connection = await amqp.connect("amqp://127.0.0.1:5672");
+  const channel = await connection.createChannel();
 
-  await channel.assertExchange("tmp_exchange", "fanout");
+  const exchange = await channel.assertExchange("exchange_test", "fanout");
 
-  channel.publish("tmp_exchange", "", Buffer.from("hello from producer 1"));
-  channel.publish("tmp_exchange", "", Buffer.from("hello from producer 2"));
-  channel.publish("tmp_exchange", "", Buffer.from("hello from producer 3"));
-  channel.publish("tmp_exchange", "", Buffer.from("hello from producer 4"));
-  channel.publish("tmp_exchange", "", Buffer.from("hello from producer 5"));
-  channel.publish("tmp_exchange", "", Buffer.from("hello from producer 6"));
+  channel.publish("exchange_test", "", Buffer.from("publish 1"))
+  channel.publish("exchange_test", "", Buffer.from("publish 2"))
+  channel.publish("exchange_test", "", Buffer.from("publish 3"))
+  channel.publish("exchange_test", "", Buffer.from("publish 4"))
+  channel.publish("exchange_test", "", Buffer.from("publish 5"))
+  channel.publish("exchange_test", "", Buffer.from("publish 6"))
 }
 
-connect();
+producer()
